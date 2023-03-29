@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LocationResource\Pages;
 use App\Filament\Resources\LocationResource\RelationManagers;
 use App\Models\Location;
+use App\Models\SubCounty;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -23,7 +24,10 @@ class LocationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('sub_county_id')
+                Forms\Components\Select::make('sub_county_id')
+                    ->options(function () {
+                        return SubCounty::all()->sortBy('name')->pluck('name', 'id');
+                    })
                     ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
@@ -35,7 +39,8 @@ class LocationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sub_county_id'),
+                Tables\Columns\TextColumn::make('subcounty.name')
+                    ->label('Sub County'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),

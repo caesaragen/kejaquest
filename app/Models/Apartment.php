@@ -42,17 +42,17 @@ class Apartment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getFullAddressAttribute()
+    public function getFullAddressAttribute() : string
     {
         return $this->location->full_address;
     }
 
-    public function getFullPriceAttribute()
+    public function getFullPriceAttribute() : string
     {
         return 'Ksh. ' . number_format($this->price);
     }
 
-    public function getFullDescriptionAttribute()
+    public function getFullDescriptionAttribute() : string
     {
         return substr($this->description, 0, 100) . '...';
     }
