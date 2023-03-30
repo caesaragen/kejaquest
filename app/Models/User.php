@@ -8,8 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Models\Concerns\IsFilamentUser;
+use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable
+/**
+ * Summary of User
+ */
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -52,10 +57,25 @@ class User extends Authenticatable
     ];
 
 
-    public function isAdmin()
+    public function isAdmin() : bool
     {
         return $this->role === 'admin';
     }
+
+    /**
+     * Summary of canAccessFilament
+     * @return bool
+     */
+    public function canAccessFilament() : bool
+    {
+        return $this->isAdmin();
+    }
+
+    public function isFilamentAdmin() : bool
+    {
+        return $this->isAdmin();
+    }
+
 
     public function isUser()
     {
