@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -42,7 +43,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function apartments() 
+    public function apartments() : HasMany
     {
         return $this->hasMany(Apartment::class);
     }
@@ -52,7 +53,7 @@ class User extends Authenticatable
         return $this->hasManyThrough(Location::class, Apartment::class);
     }
 
-    public function subCounties()
+    public function subCounties() 
     {
         return $this->hasManyThrough(SubCounty::class, Apartment::class);
     }
@@ -65,6 +66,11 @@ class User extends Authenticatable
     public function categories()
     {
         return $this->hasManyThrough(Category::class, Apartment::class);
+    }
+
+    public function reviews() : HasMany
+    {
+        return $this->hasMany(Review::class);
     }
     
 }
