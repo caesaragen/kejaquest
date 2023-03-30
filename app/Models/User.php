@@ -16,7 +16,9 @@ use Filament\Models\Contracts\FilamentUser;
  */
 class User extends Authenticatable implements FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -57,7 +59,11 @@ class User extends Authenticatable implements FilamentUser
     ];
 
 
-    public function isAdmin() : bool
+    /**
+     * Summary of isAdmin
+     * @return bool
+     */
+    public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
@@ -66,34 +72,46 @@ class User extends Authenticatable implements FilamentUser
      * Summary of canAccessFilament
      * @return bool
      */
-    public function canAccessFilament() : bool
+    public function canAccessFilament(): bool
     {
         return $this->isAdmin();
     }
 
-    public function isFilamentAdmin() : bool
+    public function isFilamentAdmin(): bool
     {
         return $this->isAdmin();
     }
 
 
+    /**
+     * Summary of isUser
+     * @return bool
+     */
     public function isUser()
     {
         return $this->role === 'user';
     }
 
 
-    public function apartments() : HasMany
+    /**
+     * Summary of apartments
+     * @return HasMany
+     */
+    public function apartments(): HasMany
     {
         return $this->hasMany(Apartment::class);
     }
 
+    /**
+     * Summary of locations
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
     public function locations()
     {
         return $this->hasManyThrough(Location::class, Apartment::class);
     }
 
-    public function subCounties() 
+    public function subCounties()
     {
         return $this->hasManyThrough(SubCounty::class, Apartment::class);
     }
@@ -108,9 +126,8 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasManyThrough(Category::class, Apartment::class);
     }
 
-    public function reviews() : HasMany
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
-    
 }

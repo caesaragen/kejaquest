@@ -8,6 +8,9 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
+/**
+ * Summary of AuthController
+ */
 class AuthController extends Controller
 {
     /**
@@ -53,10 +56,8 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
 
-        // Check email
         $user = User::where('email', $fields['email'])->first();
 
-        // Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
                 'message' => 'Bad credentials'
@@ -74,6 +75,11 @@ class AuthController extends Controller
         return response($response, 201);
     }
 
+    /**
+     * Summary of logout
+     * @param Request $request
+     * @return array<string>
+     */
     public function logout(Request $request)
     {
         auth()->user()->tokens()->delete();
