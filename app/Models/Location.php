@@ -33,5 +33,4 @@ class Location extends Model
     {
         return $this->name . ', ' . $this->subCounty->name . ', ' . $this->subCounty->county->name;
     }
-    
 }

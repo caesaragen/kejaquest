@@ -74,14 +74,14 @@ class ApartmentResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -89,5 +89,5 @@ class ApartmentResource extends Resource
             'create' => Pages\CreateApartment::route('/create'),
             'edit' => Pages\EditApartment::route('/{record}/edit'),
         ];
-    }    
+    }
 }

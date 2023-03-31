@@ -14,16 +14,27 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Summary of UserResource
+ *
+ */
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    /**
+     * Summary of form
+     *
+     * @param  Form $form
+     * @return Form
+     */
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(
+                [
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -35,23 +46,34 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('role')
-                    ->options([
+                    ->options(
+                        [
                         'admin' => 'Admin',
                         'user' => 'User',
-                    ])
+                        ]
+                    )
                     ->required(),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
-                ->password()
-                ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-                ->dehydrated(fn ($state) => filled($state))
-                ]);
+                    ->password()
+                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->dehydrated(fn ($state) => filled($state))
+                ]
+            );
     }
+
+    /**
+     * Summary of table
+     *
+     * @param  Table $table
+     * @return Table
+     */
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns(
+                [
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('phone'),
@@ -62,18 +84,30 @@ class UserResource extends Resource
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
-            ])
-            ->filters([
+                ]
+            )
+            ->filters(
+                [
                 //
-            ])
-            ->actions([
+                ]
+            )
+            ->actions(
+                [
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
+                ]
+            )
+            ->bulkActions(
+                [
                 Tables\Actions\DeleteBulkAction::make(),
-            ]);
+                ]
+            );
     }
 
+    /**
+     * Summary of getRelations
+     *
+     * @return array
+     */
     public static function getRelations(): array
     {
         return [
@@ -81,6 +115,11 @@ class UserResource extends Resource
         ];
     }
 
+    /**
+     * Summary of getPages
+     *
+     * @return array
+     */
     public static function getPages(): array
     {
         return [

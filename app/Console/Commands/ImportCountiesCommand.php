@@ -46,7 +46,6 @@ class ImportCountiesCommand extends Command
                     'county_id' => $county_id,
                 ]);
             }
-
         }
 
         $this->info('Counties imported successfully.');

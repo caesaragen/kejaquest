@@ -53,14 +53,14 @@ class CountyResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -68,5 +68,5 @@ class CountyResource extends Resource
             'create' => Pages\CreateCounty::route('/create'),
             'edit' => Pages\EditCounty::route('/{record}/edit'),
         ];
-    }    
+    }
 }

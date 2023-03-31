@@ -28,6 +28,4 @@ class County extends Model
     {
         return $this->hasManyThrough(Apartment::class, Location::class);
     }
-
-    
 }

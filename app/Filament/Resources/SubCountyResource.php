@@ -53,14 +53,14 @@ class SubCountyResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -68,5 +68,5 @@ class SubCountyResource extends Resource
             'create' => Pages\CreateSubCounty::route('/create'),
             'edit' => Pages\EditSubCounty::route('/{record}/edit'),
         ];
-    }    
+    }
 }

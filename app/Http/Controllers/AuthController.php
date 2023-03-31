@@ -21,24 +21,28 @@ class AuthController extends Controller
     public function store(Request $request): Response
     {
         try {
-            $fields = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'phone' => ['required', 'string', 'max:255', 'unique:'.User::class],
-            'password' => ['required', Rules\Password::defaults()],
-            ]);
+            $fields = $request->validate(
+                [
+                    'name' => ['required', 'string', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+                    'phone' => ['required', 'string', 'max:255', 'unique:' . User::class],
+                    'password' => ['required', Rules\Password::defaults()],
+                ]
+            );
         } catch (\Exception $e) {
             return response(['message' => 'Validation error occurred.'], 422);
         }
 
 
 
-        $user = User::create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'phone' => $fields['phone'],
-            'password' => Hash::make($fields['password'])
-        ]);
+        $user = User::create(
+            [
+                'name' => $fields['name'],
+                'email' => $fields['email'],
+                'phone' => $fields['phone'],
+                'password' => Hash::make($fields['password'])
+            ]
+        );
         $token = $user->createToken('myapptoken')->plainTextToken;
 
         $response = [
@@ -49,19 +53,30 @@ class AuthController extends Controller
         return response($response, 201);
     }
 
+    /**
+     * Summary of login
+     *
+     * @param  Request $request
+     * @return Response
+     */
     public function login(Request $request): Response
     {
-        $fields = $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string'
-        ]);
+        $fields = $request->validate(
+            [
+                'email' => 'required|string',
+                'password' => 'required|string'
+            ]
+        );
 
         $user = User::where('email', $fields['email'])->first();
 
         if (!$user || !Hash::check($fields['password'], $user->password)) {
-            return response([
-                'message' => 'Bad credentials'
-            ], 401);
+            return response(
+                [
+                    'message' => 'Bad credentials'
+                ],
+                401
+            );
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
@@ -77,7 +92,8 @@ class AuthController extends Controller
 
     /**
      * Summary of logout
-     * @param Request $request
+     *
+     * @param  Request $request
      * @return array<string>
      */
     public function logout(Request $request)
